@@ -1,0 +1,23 @@
+<configuration scan="false" scanPeriod="5 seconds" debug="false">
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <property name="LOG_FILE" value="logs/demo.log"/>
+
+    <property name="filePatternFormat" value="%d{HH:mm:ss.SSS} %-5level %-20logger{5} - %msg%n"/>
+
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}</file>
+        <encoder>
+            <pattern>${filePatternFormat}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <param name="fileNamePattern" value="${LOG_FILE}.%d{yyyy-MM-dd}.log"/>
+            <param name="maxHistory" value="31"/>
+        </rollingPolicy>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="ROLLING" />
+    </root>
+</configuration>
