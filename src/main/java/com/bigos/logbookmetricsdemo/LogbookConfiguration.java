@@ -1,6 +1,5 @@
 package com.bigos.logbookmetricsdemo;
 
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +7,6 @@ import org.zalando.logbook.*;
 
 import java.util.List;
 
-import static org.zalando.logbook.BodyReplacers.replaceBody;
 import static org.zalando.logbook.Conditions.*;
 
 @Configuration
@@ -17,6 +15,7 @@ public class LogbookConfiguration {
     @Bean
     public Logbook logbook(
             final List<RawRequestFilter> rawRequestFilters,
+            final List<RawResponseFilter> rawResponseFilters,
             final List<HeaderFilter> headerFilters,
             final List<QueryFilter> queryFilters,
             final List<BodyFilter> bodyFilters,
@@ -40,21 +39,7 @@ public class LogbookConfiguration {
                         requestTo("**/*.html"),
                         requestTo("**/*.png"),
                         requestTo("/actuator/info")))
-                .rawResponseFilter(
-                        RawResponseFilters.replaceBody(
-                            replaceBody(
-                                    contentType(
-                                            "application/json",
-                                            "text/plain",
-                                            "application/octet-stream",
-                                            "text/html",
-                                            "image/svg+xml",
-                                            "application/javascript",
-                                            "text/css"
-                                    ),
-                                    "Body filtered out"
-                            )
-                        )
-                ).build();
+                .rawResponseFilters(rawResponseFilters)
+                .build();
     }
 }

@@ -8,6 +8,7 @@ import java.util.Map;
 /**
  * curl localhost:8080
  * curl -X POST localhost:8080 -d '{"xd": "xd"}' -H "content-type: application/json"
+ * curl localhost:8080/actuator/info
  */
 
 @RestController
